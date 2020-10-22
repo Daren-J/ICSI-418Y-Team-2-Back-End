@@ -16,7 +16,7 @@ public class Match {
     @NotNull
     private String tournamentId;
 
-    @NotNull
+    
     private Collection<String> teamId;
     
     private Date date = new Date();
@@ -31,6 +31,14 @@ public class Match {
 
     public void setTournamentId(String tournamentId){
         this.tournamentId = tournamentId;
+    }
+
+    public Collection<String> getTeamId(){
+        return teamId;
+    }
+
+    public void setTeamId(Collection<String> teamId){
+        this.teamId = teamId;
     }
 
     public Date getDate(){
