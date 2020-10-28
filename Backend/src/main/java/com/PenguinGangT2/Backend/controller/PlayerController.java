@@ -28,4 +28,10 @@ public class PlayerController {
     public Player getPlayerByName(@PathVariable String name){
         return playerRepo.findByName(name).orElseThrow(()-> new ResourceNotFoundException());
     }
+
+    @GetMapping(value = "/{id}")
+    public Player getPlayerById(@PathVariable String id){
+        return playerRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException());
+    }
+
 }

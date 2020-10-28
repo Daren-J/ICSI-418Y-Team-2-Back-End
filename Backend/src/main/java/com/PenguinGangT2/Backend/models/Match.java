@@ -25,6 +25,10 @@ public class Match {
         return id;
     }
 
+    public void setId(String id){
+        this.id = id;
+    }
+
     public String getTournamentId(){
         return tournamentId;
     }

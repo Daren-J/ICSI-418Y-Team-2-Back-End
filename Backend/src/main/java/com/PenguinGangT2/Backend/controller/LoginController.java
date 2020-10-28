@@ -93,6 +93,7 @@ public class LoginController {
         //
         System.out.println(user.getFirstName());
         System.out.println(user.getLastName());
+        
         user.setPassword(result);
         Collection<String> friends = new ArrayList<>();
         user.setFriends(friends);

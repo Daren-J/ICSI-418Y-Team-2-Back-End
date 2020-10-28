@@ -25,6 +25,10 @@ public class Team {
         return id; 
     }
 
+    public void setId(String id){
+        this.id = id;
+    }
+
     public String getUserId(){
         return userId;
     }
