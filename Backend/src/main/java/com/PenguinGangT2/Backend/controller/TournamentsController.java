@@ -31,6 +31,11 @@ public class TournamentsController {
         return tournamentsRepo.findAll();
     }
 
+    @GetMapping(value = "/{id}")
+    public Tournaments getTournament(@PathVariable String id){
+        return tournamentsRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException());
+    }
+
     @PostMapping
     public Tournaments postTournaments(@Valid @RequestBody Tournaments tournaments){
         return tournamentsRepo.save(tournaments);

@@ -43,7 +43,7 @@ public class TeamController {
     }
 
     @PutMapping(value = "/{id}")
-    public Team updateTournaments(@RequestBody Team team, @PathVariable String id){
+    public Team updateTeam(@RequestBody Team team, @PathVariable String id){
         Optional<Team> original = teamRepo.findById(id);
 
         if(!original.isPresent()){
@@ -58,7 +58,7 @@ public class TeamController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public void deleteTournaments(@PathVariable String id){
+    public void deleteTeam(@PathVariable String id){
         teamRepo.deleteById(id);
     }
 }

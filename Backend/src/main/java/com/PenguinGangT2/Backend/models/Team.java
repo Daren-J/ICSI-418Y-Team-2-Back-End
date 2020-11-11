@@ -19,6 +19,8 @@ public class Team {
     @NotNull
     private Collection<String> playerList;
 
+    private int power;
+
     private Date date = new Date();
 
     public String getId(){
@@ -43,6 +45,14 @@ public class Team {
 
     public void setPlayerList(Collection<String> playerList){
         this.playerList = playerList;
+    }
+
+    public int getPower(){
+        return power;
+    }
+
+    public void setPoser(int power){
+        this.power = power;
     }
 
     public Date getDate(){

@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/{username}")
-    public User updateTournaments(@RequestBody User user, @PathVariable String username){
+    public User updateUser(@RequestBody User user, @PathVariable String username){
         Optional<User> original = userRepo.findByUsername(username);
 
         if(!original.isPresent()){

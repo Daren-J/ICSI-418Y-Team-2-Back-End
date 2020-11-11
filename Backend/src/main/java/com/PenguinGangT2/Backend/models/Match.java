@@ -1,5 +1,6 @@
 package com.PenguinGangT2.Backend.models;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -17,7 +18,7 @@ public class Match {
     private String tournamentId;
 
     
-    private Collection<String> teamId;
+    private ArrayList<String> teamId;
     
     private Date date = new Date();
     
@@ -41,7 +42,7 @@ public class Match {
         return teamId;
     }
 
-    public void setTeamId(Collection<String> teamId){
+    public void setTeamId(ArrayList<String> teamId){
         this.teamId = teamId;
     }
 
