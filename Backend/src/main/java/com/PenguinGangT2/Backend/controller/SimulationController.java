@@ -1,6 +1,7 @@
 package com.PenguinGangT2.Backend.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -26,7 +27,7 @@ public class SimulationController {
     private TeamRepository teamRepo;
 
     @GetMapping(value = "/{id}")
-    public ArrayList<Integer> getScore(@PathVariable String id){
+    public HashMap<String, Integer> getScore(@PathVariable String id){
         Match simulMatch = matchRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException());
 
         Team teamFirst;
@@ -35,6 +36,9 @@ public class SimulationController {
 
         int team1 = 0;
         int team2 = 0;
+        String team1Id = "";
+        String team2Id = "";
+
 
         Iterator it = simulMatch.getTeamId().iterator();
         while(it.hasNext()){
@@ -42,10 +46,12 @@ public class SimulationController {
 
             if(k == 0){
                 teamFirst = teamRepo.findById((String) it.next()).orElseThrow(()-> new ResourceNotFoundException());
+                team1Id = teamFirst.getId();
                 team1 = teamFirst.getPower();
                 k++;
             }else{
                 teamSecond = teamRepo.findById((String) it.next()).orElseThrow(()-> new ResourceNotFoundException());
+                team2Id = teamSecond.getId();
                 team2 = teamSecond.getPower();
             }
         }
@@ -102,9 +108,9 @@ public class SimulationController {
                 team2Score++;
             }
         }
-        ArrayList<Integer> finalScore = new ArrayList<>();
-        finalScore.add(team1Score);
-        finalScore.add(team2Score);
+        HashMap<String, Integer> finalScore = new HashMap<>();
+        finalScore.put(team1Id, team1Score);
+        finalScore.put(team2Id, team2Score);
         return finalScore;
     }
 }

@@ -1,14 +1,13 @@
 package com.PenguinGangT2.Backend.controller;
 
-import java.util.Collection;
-import java.util.Optional;
-
-import javax.validation.Valid;
-
 import com.PenguinGangT2.Backend.exception.ResourceNotFoundException;
 import com.PenguinGangT2.Backend.models.Match;
 import com.PenguinGangT2.Backend.repository.MatchRepository;
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,43 +22,60 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/match")
 public class MatchController {
 
-    @Autowired
-    private MatchRepository matchRepo;
+  @Autowired
+  private MatchRepository matchRepo;
 
-    @GetMapping
-    public Collection<Match> getAll(){
-        return matchRepo.findAll();
+  @GetMapping
+  public Collection<Match> getAll() {
+    return matchRepo.findAll();
+  }
+
+  @GetMapping(value = "/{id}")
+  public Match getMatch(@PathVariable String id) {
+    return matchRepo
+      .findById(id)
+      .orElseThrow(() -> new ResourceNotFoundException());
+  }
+
+  @GetMapping(value = "/tournament/{tournamentId}")
+  public List<Match> getMatchesByTournamentId(
+    @PathVariable String tournamentId
+  ) {
+    List<Match> matchList = new ArrayList<>();
+    matchList = matchRepo.findAll();
+    List<Match> matches = new ArrayList<>();
+
+    for (int i = 0; i < matchList.size(); i++) {
+      if (matchList.get(i).getTournamentId().equals(tournamentId)) {
+        matches.add(matchList.get(i));
+      }
     }
+    return matches;
+  }
 
-    @GetMapping(value = "/{id}")
-    public Match getMatch(@PathVariable String id){
-        return matchRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException());
+  @PostMapping
+  public Match postMatch(@Valid @RequestBody Match match) {
+    return matchRepo.save(match);
+  }
+
+  @PutMapping(value = "/{id}")
+  public Match updateMatch(@RequestBody Match match, @PathVariable String id) {
+    Optional<Match> original = matchRepo.findById(id);
+
+    if (!original.isPresent()) {
+      return matchRepo
+        .findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException());
     }
+    System.out.println(original);
 
-    @PostMapping
-    public Match postMatch(@Valid @RequestBody Match match){
-        return matchRepo.save(match);
-    }
+    match.setId(id);
 
-    @PutMapping(value = "/{id}")
-    public Match updateMatch(@RequestBody Match match, @PathVariable String id){
-        Optional<Match> original = matchRepo.findById(id);
+    return matchRepo.save(match);
+  }
 
-        if(!original.isPresent()){
-            return matchRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException());
-        }
-        System.out.println(original);
-
-
-        match.setId(id);
-
-        return matchRepo.save(match);
-    }
-
-    @DeleteMapping(value = "/{id}")
-    public void deleteMatch(@PathVariable String id){
-        matchRepo.deleteById(id);
-    }
-
-    
+  @DeleteMapping(value = "/{id}")
+  public void deleteMatch(@PathVariable String id) {
+    matchRepo.deleteById(id);
+  }
 }

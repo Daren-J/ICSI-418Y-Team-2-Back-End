@@ -2,4 +2,4 @@ Backend/serviceAccount.json
 
 Backend/src/main/resources/application.properties
 
-chatServer/node_modules/
+node_modules/
